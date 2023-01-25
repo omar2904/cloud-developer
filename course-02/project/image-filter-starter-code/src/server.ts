@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { Url } from 'url';
+import { url } from 'inspector';
 
 (async () => {
 
@@ -33,16 +35,21 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   app.get( "/filteredimage/", async ( req, res ) => {
     let  image  = req.query;
-    console.log(image.image_url)
+    
+    if(image.image_url == undefined)
+      return res.status(422).send(`Please enter valid url`)
 
-    let filteredImage = (await filterImageFromURL(image.image_url)).toString()
-    res.send(`The filtered Image is: ${filteredImage}`)
-    let file: Array<string> = []
-    file.push(filteredImage.toString())
+      filterImageFromURL(image.image_url)
+      .then(filteredimage => {
+        return res.status(200).send(filteredimage)
+      }).catch(() => {
+        return res.status(422).send("Error when processing the image");
+      });   
+    //let file: Array<string> = []
+    //file.push(filteredImage.toString())
     //deleteLocalFiles(file)
 
 } );
-  
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async ( req, res ) => {
