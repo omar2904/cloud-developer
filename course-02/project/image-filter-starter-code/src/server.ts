@@ -33,7 +33,7 @@ import { url } from 'inspector';
 
   //! END @TODO1
 
-  app.get( "/filteredimage/", async ( req, res ) => {
+  app.get( "/filteredimage/", async (req:express.Request, res:express.Response) => {
     let  image  = req.query;
     
     if(image.image_url == undefined)
