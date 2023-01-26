@@ -43,7 +43,7 @@ import { url } from 'inspector';
       .then(filteredimage => {
         return res.status(200).send(filteredimage)
       }).catch(() => {
-        return res.status(422).send("Error when processing the image");
+        return res.status(422).send("Error Processing Image");
       });   
     //let file: Array<string> = []
     //file.push(filteredImage.toString())
